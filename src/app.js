@@ -12,16 +12,16 @@ app.use(cors({
     credentials: true,
 }));
 
-//Setting for accepting json data
-app.use(express.json({limit: "16kb"}));
 
-//setting for accepting data through url
-app.use(express.urlencoded({extended: true, limit: "16kb"}));
+app.use(express.json({limit: "16kb"})); //Setting for accepting json data
+app.use(express.urlencoded({extended: true, limit: "16kb"})); //setting for accepting data through url
+app.use(express.static("public")); //setting for accessing static data like assets, images and all from public folder
+app.use(cookieParser()); //setting cookie
 
-//setting for accessing static data like assets, images and all from public folder
-app.use(express.static("public"));
+//routes import
+import userRouter from "./routes/user.routes.js";
 
-//setting cookie
-app.use(cookieParser());
+//routes declaration
+app.use("/api/v1/users", userRouter);
 
 export {app};
