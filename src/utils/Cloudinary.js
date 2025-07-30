@@ -24,13 +24,21 @@ console.log("Cloudinary Config: ", process.env.CLOUNDINARY_NAME, process.env.CLO
               }
             )
             console.log("File is uploaded successfully ", response.url);
+            console.log("local path", localFilePath);
+            if(fs.existsSync(localFilePath)){
+                console.log("Local file exists, proceeding to delete it after upload");
+            }
             fs.unlinkSync(localFilePath); //remove the locally saved file after uploading to cloudinary
             console.log("Local file deleted successfully after upload");
             console.log("Response from Cloudinary: ", response);
             return response;
 
         }catch(error){
-            fs.unlinkSync(localFilePath);//remove the locally saved file if operation gets failed.
+           console.log("local path", localFilePath);
+            if(fs.existsSync(localFilePath)){
+                console.log("Local file exists, proceeding to delete it after upload");
+            }
+           fs.unlinkSync(localFilePath);//remove the locally saved file if operation gets failed.
            console.log(error);
            return null;
         }
